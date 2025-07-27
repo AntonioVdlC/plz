@@ -1,0 +1,84 @@
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Overview
+
+**plz** is a Go CLI tool providing useful utilities for development tasks. Built with Cobra CLI framework using a single-package, modular architecture.
+
+## Build and Development Commands
+
+```bash
+# Build binary
+go build -o plz .
+
+# Run without building
+go run . [command] [args]
+
+# Development
+go mod tidy
+go fmt ./...
+go vet ./...
+```
+
+## Architecture
+
+### File Organization Pattern
+- `main.go` - Root command and application entry point
+- `cmd_*.go` - Individual command implementations (one file per command)
+- Single `main` package for simplicity
+
+### Command Structure Template
+Each command follows this pattern:
+
+```go
+var commandCmd = &cobra.Command{
+    Use:   "command [args]",
+    Short: "Brief description",
+    Long:  "Detailed description",
+    Args:  cobra.ExactArgs(1), // or other validators
+    RunE:  runCommand,
+}
+
+var (
+    commandFlag string
+    commandBool bool
+)
+
+func init() {
+    commandCmd.Flags().StringVarP(&commandFlag, "flag", "f", "default", "Description")
+    commandCmd.Flags().BoolVarP(&commandBool, "bool", "b", false, "Description")
+    rootCmd.AddCommand(commandCmd)
+}
+
+func runCommand(cmd *cobra.Command, args []string) error {
+    // Implementation
+    return nil
+}
+```
+
+### Key Conventions
+- **Error Handling**: Return `error` from run functions, use `fmt.Errorf()` with wrapping
+- **Flag Naming**: Use both short (`-f`) and long (`--flag`) versions
+- **File Input Pattern**: Many commands support `--file` flag for file vs string input
+- **Output Format**: Include operation context in output (e.g., "Encoded (BASE64): ...")
+
+## Adding New Commands
+
+1. Create `cmd_newcommand.go`
+2. Follow the command structure template above
+3. Register command in `init()` function with `rootCmd.AddCommand(newcommandCmd)`
+4. Implement the `runNewcommand` function with proper error handling
+
+## Current Commands
+
+- `encode` - Base64/URL encoding and decoding
+- `hash` - MD5/SHA1/SHA256 hash generation for strings or files  
+- `json` - JSON pretty printing, minification, and validation
+- `random` - Random string/number/UUID generation
+- `time` - Timestamp conversion and formatting
+
+## Dependencies
+
+- **Cobra CLI**: `github.com/spf13/cobra` - Primary CLI framework
+- **Go Version**: 1.24.4

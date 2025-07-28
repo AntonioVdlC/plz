@@ -19,6 +19,10 @@ go run . [command] [args]
 go mod tidy
 go fmt ./...
 go vet ./...
+
+# Testing
+go test ./cmd/...       # Run all tests
+go test ./cmd/ -v       # Run tests with verbose output
 ```
 
 ## Architecture
@@ -28,6 +32,8 @@ go vet ./...
 - `cmd/` - Command package directory
   - `cmd/root.go` - Root command definition and Execute function
   - `cmd/cmd_*.go` - Individual command implementations (one file per command)
+  - `cmd/*_test.go` - Test files for each command
+  - `cmd/testdata/` - Test data files
 - Package structure: `main` package imports `plz/cmd` package
 
 ### Command Structure Template

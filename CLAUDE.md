@@ -24,14 +24,22 @@ go vet ./...
 ## Architecture
 
 ### File Organization Pattern
-- `main.go` - Root command and application entry point
-- `cmd_*.go` - Individual command implementations (one file per command)
-- Single `main` package for simplicity
+- `main.go` - Application entry point
+- `cmd/` - Command package directory
+  - `cmd/root.go` - Root command definition and Execute function
+  - `cmd/cmd_*.go` - Individual command implementations (one file per command)
+- Package structure: `main` package imports `plz/cmd` package
 
 ### Command Structure Template
 Each command follows this pattern:
 
 ```go
+package cmd
+
+import (
+    "github.com/spf13/cobra"
+)
+
 var commandCmd = &cobra.Command{
     Use:   "command [args]",
     Short: "Brief description",
@@ -65,8 +73,8 @@ func runCommand(cmd *cobra.Command, args []string) error {
 
 ## Adding New Commands
 
-1. Create `cmd_newcommand.go`
-2. Follow the command structure template above
+1. Create `cmd/cmd_newcommand.go` in the cmd package
+2. Follow the command structure template above (use `package cmd`)
 3. Register command in `init()` function with `rootCmd.AddCommand(newcommandCmd)`
 4. Implement the `runNewcommand` function with proper error handling
 

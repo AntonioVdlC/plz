@@ -12,11 +12,11 @@ import (
 
 func TestTimeCommand(t *testing.T) {
 	tests := []struct {
-		name       string
-		args       []string
-		flags      map[string]string
-		checkFunc  func(string) bool
-		wantErr    bool
+		name      string
+		args      []string
+		flags     map[string]string
+		checkFunc func(string) bool
+		wantErr   bool
 	}{
 		{
 			name:  "current time default",
@@ -89,18 +89,18 @@ func TestTimeCommand(t *testing.T) {
 			wantErr: false,
 		},
 		{
-			name:     "invalid date format",
-			args:     []string{"invalid-date"},
-			flags:    map[string]string{},
+			name:      "invalid date format",
+			args:      []string{"invalid-date"},
+			flags:     map[string]string{},
 			checkFunc: func(output string) bool { return true },
-			wantErr:  true,
+			wantErr:   true,
 		},
 		{
-			name:     "invalid timezone",
-			args:     []string{"2021-01-01"},
-			flags:    map[string]string{"timezone": "Invalid/Zone"},
+			name:      "invalid timezone",
+			args:      []string{"2021-01-01"},
+			flags:     map[string]string{"timezone": "Invalid/Zone"},
 			checkFunc: func(output string) bool { return true },
-			wantErr:  true,
+			wantErr:   true,
 		},
 	}
 

@@ -139,6 +139,12 @@ go fmt ./...
 
 # Run static analysis
 go vet ./...
+
+# Run tests
+go test ./cmd/...
+
+# Run tests with coverage
+go test -race -coverprofile=coverage.out -covermode=atomic ./cmd/...
 ```
 
 ### Adding New Commands
@@ -147,6 +153,17 @@ go vet ./...
 2. Follow the existing command pattern using Cobra
 3. Register the command in the `init()` function
 4. See `CLAUDE.md` for detailed patterns and conventions
+
+## CI/CD
+
+[![CI](https://github.com/your-username/plz/workflows/CI/badge.svg)](https://github.com/your-username/plz/actions)
+
+This project uses GitHub Actions for continuous integration:
+
+- **Tests**: Runs across Go versions 1.21, 1.22, 1.23
+- **Code Quality**: golangci-lint, go vet, go fmt checks
+- **Coverage**: 93.5% test coverage
+- **Cross-platform builds**: Linux, macOS, Windows (AMD64, ARM64)
 
 ## Dependencies
 

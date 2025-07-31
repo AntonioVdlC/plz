@@ -32,7 +32,7 @@ func TestRootCommand(t *testing.T) {
 
 func TestRootCommandHasSubcommands(t *testing.T) {
 	expectedCommands := []string{"encode", "hash", "json", "random", "time"}
-	
+
 	for _, expectedCmd := range expectedCommands {
 		found := false
 		for _, cmd := range rootCmd.Commands() {

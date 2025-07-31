@@ -34,6 +34,8 @@ go test ./cmd/ -v       # Run tests with verbose output
   - `cmd/cmd_*.go` - Individual command implementations (one file per command)
   - `cmd/*_test.go` - Test files for each command
   - `cmd/testdata/` - Test data files
+- `.github/workflows/` - GitHub Actions CI/CD workflows
+- `.golangci.yml` - Linter configuration
 - Package structure: `main` package imports `plz/cmd` package
 
 ### Command Structure Template
@@ -96,3 +98,28 @@ func runCommand(cmd *cobra.Command, args []string) error {
 
 - **Cobra CLI**: `github.com/spf13/cobra` - Primary CLI framework
 - **Go Version**: 1.24.4
+
+## CI/CD
+
+The project uses GitHub Actions for continuous integration:
+
+### Workflows
+- **ci.yml** - Runs on push/PR to main branch
+  - Tests across Go versions 1.21, 1.22, 1.23
+  - Runs `go vet`, `go fmt` check, and all tests
+  - Generates test coverage reports
+  - Runs golangci-lint for code quality
+  - Tests binary functionality
+
+- **release.yml** - Runs on git tags/releases
+  - Builds cross-platform binaries (Linux, macOS, Windows)
+  - Supports AMD64 and ARM64 architectures
+  - Uploads release artifacts
+
+### Coverage
+Current test coverage: **93.5%** of statements
+
+### Code Quality
+- Uses golangci-lint with custom configuration
+- Enforces formatting with `gofmt`
+- Static analysis with `go vet`

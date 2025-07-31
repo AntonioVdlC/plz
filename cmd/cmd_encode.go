@@ -61,7 +61,7 @@ func runEncode(cmd *cobra.Command, args []string) error {
 	if shouldDecode {
 		operation = "Decoded"
 	}
-	
+
 	fmt.Printf("%s (%s): %s\n", operation, strings.ToUpper(encodeType), result)
 	return nil
 }

@@ -43,7 +43,7 @@ func runTime(cmd *cobra.Command, args []string) error {
 		targetTime = time.Now().In(location)
 	} else {
 		input := args[0]
-		
+
 		if timestamp, err := strconv.ParseInt(input, 10, 64); err == nil {
 			targetTime = time.Unix(timestamp, 0).In(location)
 		} else {

@@ -145,14 +145,38 @@ go test ./cmd/...
 
 # Run tests with coverage
 go test -race -coverprofile=coverage.out -covermode=atomic ./cmd/...
+
+# Development automation (Makefile)
+make build          # Build binary
+make quality        # Run all quality checks (fmt, vet, lint, test)
+make setup          # Setup development environment with pre-commit hooks
 ```
+
+### Development Setup
+
+Quick setup for development:
+
+```bash
+# Install tools and setup pre-commit hooks
+make setup
+
+# Add Go bin to PATH (if needed)
+echo 'export PATH=$PATH:$(go env GOPATH)/bin' >> ~/.zshrc
+source ~/.zshrc
+
+# Verify setup
+make quality
+```
+
+**Having issues?** See [SETUP.md](SETUP.md) for detailed setup instructions and troubleshooting.
 
 ### Adding New Commands
 
-1. Create a new file `cmd_newcommand.go`
+1. Create a new file `cmd/cmd_newcommand.go`
 2. Follow the existing command pattern using Cobra
 3. Register the command in the `init()` function
-4. See `CLAUDE.md` for detailed patterns and conventions
+4. Add tests in `cmd/cmd_newcommand_test.go`
+5. See `CLAUDE.md` for detailed patterns and conventions
 
 ## CI/CD
 

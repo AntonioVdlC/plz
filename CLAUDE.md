@@ -23,6 +23,13 @@ go vet ./...
 # Testing
 go test ./cmd/...       # Run all tests
 go test ./cmd/ -v       # Run tests with verbose output
+
+# Pre-commit hooks (choose one approach)
+make setup              # Install tools and setup pre-commit framework
+./scripts/install-hooks.sh  # Install simple Git hooks (alternative)
+
+# Development workflow
+make quality            # Run all quality checks (fmt, vet, lint, test)
 ```
 
 ## Architecture
@@ -35,7 +42,10 @@ go test ./cmd/ -v       # Run tests with verbose output
   - `cmd/*_test.go` - Test files for each command
   - `cmd/testdata/` - Test data files
 - `.github/workflows/` - GitHub Actions CI/CD workflows
+- `scripts/` - Development scripts and Git hooks
 - `.golangci.yml` - Linter configuration
+- `.pre-commit-config.yaml` - Pre-commit framework configuration
+- `Makefile` - Development automation
 - Package structure: `main` package imports `plz/cmd` package
 
 ### Command Structure Template
@@ -89,7 +99,7 @@ func runCommand(cmd *cobra.Command, args []string) error {
 ## Current Commands
 
 - `encode` - Base64/URL encoding and decoding
-- `hash` - MD5/SHA1/SHA256 hash generation for strings or files  
+- `hash` - MD5/SHA1/SHA256 hash generation for strings or files
 - `json` - JSON pretty printing, minification, and validation
 - `random` - Random string/number/UUID generation
 - `time` - Timestamp conversion and formatting
@@ -123,3 +133,39 @@ Current test coverage: **93.5%** of statements
 - Uses golangci-lint with custom configuration
 - Enforces formatting with `gofmt`
 - Static analysis with `go vet`
+
+## Development Tools
+
+### Pre-commit Hooks
+Two approaches available for pre-commit hooks:
+
+#### 1. Pre-commit Framework (Recommended)
+```bash
+# Setup (installs tools and hooks)
+make setup
+
+# Or manually:
+pip install pre-commit
+pre-commit install
+
+# Run on all files
+pre-commit run --all-files
+```
+
+#### 2. Simple Git Hooks
+```bash
+# Install custom Git hooks
+./scripts/install-hooks.sh
+
+# Test manually
+./scripts/pre-commit.sh
+```
+
+### Makefile Commands
+```bash
+make build          # Build binary
+make test           # Run tests with coverage
+make quality        # Run all quality checks
+make clean          # Clean build artifacts
+make help           # Show all commands
+```

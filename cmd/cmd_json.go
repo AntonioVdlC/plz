@@ -44,8 +44,8 @@ func runJSON(cmd *cobra.Command, args []string) error {
 	}
 
 	var data interface{}
-	if err := json.Unmarshal(jsonData, &data); err != nil {
-		return fmt.Errorf("invalid JSON: %w", err)
+	if unmarshalErr := json.Unmarshal(jsonData, &data); unmarshalErr != nil {
+		return fmt.Errorf("invalid JSON: %w", unmarshalErr)
 	}
 
 	if jsonValidate {

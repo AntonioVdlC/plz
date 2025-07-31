@@ -1,0 +1,52 @@
+repos:
+  # General hooks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+
+  # Go-specific local hooks (more reliable)
+  - repo: local
+    hooks:
+      - id: go-fmt
+        name: go fmt
+        entry: gofmt
+        args: [-w, -s]
+        language: system
+        files: \.go$
+
+      - id: go-vet
+        name: go vet
+        entry: go vet
+        args: [./...]
+        language: system
+        files: \.go$
+        pass_filenames: false
+
+      - id: go-mod-tidy
+        name: go mod tidy
+        entry: go mod tidy
+        language: system
+        files: go\.(mod|sum)$
+        pass_filenames: false
+
+      - id: golangci-lint
+        name: golangci-lint
+        entry: bash -c 'if command -v golangci-lint >/dev/null 2>&1; then golangci-lint run --timeout=5m; else echo "golangci-lint not found, skipping"; fi'
+        language: system
+        files: \.go$
+        pass_filenames: false
+
+      - id: go-test
+        name: go test
+        entry: go test
+        args: [./cmd/...]
+        language: system
+        files: \.go$
+        pass_filenames: false

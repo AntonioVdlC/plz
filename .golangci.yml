@@ -7,14 +7,21 @@ linters-settings:
     simplify: true
   goimports:
     local-prefixes: plz
-  golint:
+  revive:
     min-confidence: 0.8
   govet:
-    check-shadowing: true
+    enable:
+      - shadow
   misspell:
     locale: US
   unused:
     check-exported: false
+  gosec:
+    excludes:
+      - G304  # File path provided as variable (acceptable for CLI tools)
+      - G401  # Use of weak cryptographic primitive (we need MD5/SHA1 for compatibility)
+      - G501  # Blocklisted import crypto/md5 (we need this for hash command)
+      - G505  # Blocklisted import crypto/sha1 (we need this for hash command)
 
 linters:
   enable:
@@ -22,7 +29,7 @@ linters:
     - errcheck
     - gofmt
     - goimports
-    - golint
+    - revive
     - gosec
     - govet
     - ineffassign
@@ -31,16 +38,26 @@ linters:
     - typecheck
     - unconvert
     - unused
-    - varcheck
-  disable:
-    - deadcode
-    - structcheck
+  disable: []
 
 issues:
   exclude-use-default: false
   exclude:
     # Allow fmt.Printf in main commands for output
     - "G104: Errors unhandled"
+    # Allow weak crypto for hash utilities (user choice)
+    - "G401: Use of weak cryptographic primitive"
+    - "G501: Blocklisted import crypto/md5"
+    - "G505: Blocklisted import crypto/sha1"
+    # Allow file path variables in CLI tools
+    - "G304: Potential file inclusion via variable"
+    # Allow unused cmd parameter in cobra handlers
+    - "unused-parameter: parameter 'cmd' seems to be unused"
+    # Allow unused parameters in test helper functions and cobra handlers
+    - "unused-parameter: parameter 'output' seems to be unused"
+    - "unused-parameter: parameter 'args' seems to be unused"
+    # Allow package without comment for simple CLI tools
+    - "package-comments: should have a package comment"
   exclude-rules:
     - path: _test\.go
       linters:

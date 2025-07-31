@@ -74,13 +74,13 @@ func generateRandomString(length int) (string, error) {
 	return string(b), nil
 }
 
-func generateRandomNumber(min, max int64) (int64, error) {
-	diff := max - min
+func generateRandomNumber(minVal, maxVal int64) (int64, error) {
+	diff := maxVal - minVal
 	n, err := rand.Int(rand.Reader, big.NewInt(diff))
 	if err != nil {
 		return 0, err
 	}
-	return min + n.Int64(), nil
+	return minVal + n.Int64(), nil
 }
 
 func generateUUID() (string, error) {

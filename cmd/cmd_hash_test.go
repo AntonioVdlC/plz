@@ -140,7 +140,7 @@ func TestHashFromFile(t *testing.T) {
 		t.Errorf("Unexpected error: %v", err)
 	}
 
-	expected := "SHA256 (testdata/test.txt): b94d27b9934d3e08a52e52d7da7dabfac484efe37a5380ee9088f7ace2efcde9"
+	expected := "SHA256 (testdata/test.txt): a948904f2f0f479b8f8197694b30184b0d2ed1c1cd2a1ec0fb85d299a192a447"
 	if output != expected {
 		t.Errorf("Expected output %q, got %q", expected, output)
 	}

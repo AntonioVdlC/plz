@@ -36,9 +36,9 @@ func runEncode(cmd *cobra.Command, args []string) error {
 	switch strings.ToLower(encodeType) {
 	case "base64":
 		if shouldDecode {
-			decoded, err := base64.StdEncoding.DecodeString(input)
-			if err != nil {
-				return fmt.Errorf("failed to decode base64: %w", err)
+			decoded, decodeErr := base64.StdEncoding.DecodeString(input)
+			if decodeErr != nil {
+				return fmt.Errorf("failed to decode base64: %w", decodeErr)
 			}
 			result = string(decoded)
 		} else {

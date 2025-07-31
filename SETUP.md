@@ -78,6 +78,29 @@ make test    # Run tests
 
 ## Troubleshooting
 
+### Pre-commit hook errors during commit
+
+If you see errors like:
+```
+[ERROR] `go-fmt-import` is not present in repository
+[WARNING] repo uses deprecated stage names
+```
+
+This means the pre-commit configuration had issues. The fix:
+
+```bash
+# Update to the fixed configuration
+git pull  # if working with others
+# OR manually update .pre-commit-config.yaml
+
+# Reinstall hooks
+pre-commit uninstall
+pre-commit install
+
+# Test the hooks
+pre-commit run --all-files
+```
+
 ### golangci-lint: command not found
 
 This usually means `$GOPATH/bin` is not in your PATH. Fix it:

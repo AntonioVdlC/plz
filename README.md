@@ -180,7 +180,7 @@ make quality
 
 ## CI/CD
 
-[![CI](https://github.com/your-username/plz/workflows/CI/badge.svg)](https://github.com/your-username/plz/actions)
+[![CI](https://github.com/AntonioVdlc/plz/workflows/CI/badge.svg)](https://github.com/AntonioVdlc/plz/actions)
 
 This project uses GitHub Actions for continuous integration:
 
